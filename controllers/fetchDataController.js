@@ -34,9 +34,40 @@ const getExactTime = asyncHandler(async (req, res) => {
     })
 })
 
+const getTimeRange = asyncHandler(async (req, res) => {
+   
+  // const customer = await AccessCardCustomer.findOne({ creditAccountNumber: req.params.creditAccountNumber }).populate('responses')
+  const getWeatherDateTime = await WeatherData.find({
+      createdAt: {
+        $gte: `${req.params.fromdatetime}`,
+        $lte: `${req.params.todatetime}`,
+      }
+    })
+    // $gte: `2022-06-16T00:00:00.000+00:00`,
+    // $lte: `2022-06-16T23:59:59.000+00:00`,
+    const getBikesDateTime = await BikesData.find({
+      createdAt: {
+        $gte: `${req.params.fromdatetime}`,
+        $lte: `${req.params.todatetime}`,
+      }
+    })
 
+    if(!getWeatherDateTime || !getBikesDateTime) {
+      res.json({
+        success: true,
+        message: 'No Record found'
+      })
+    }
+
+  res.json({
+      success: true,
+      getWeatherDateTime,
+      getBikesDateTime,
+  })
+})
 
 
 module.exports = {
     getExactTime,
+    getTimeRange,
 }
