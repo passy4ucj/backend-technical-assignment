@@ -66,8 +66,19 @@ const getTimeRange = asyncHandler(async (req, res) => {
   })
 })
 
+const getAllData = asyncHandler(async (req, res) => {
+  const getWeather = await WeatherData.find({})
+  const getBikes = await BikesData.find({})
+
+  res.json({
+    success: true,
+    getWeather,
+    getBikes,
+  })
+})
 
 module.exports = {
     getExactTime,
     getTimeRange,
+    getAllData,
 }
