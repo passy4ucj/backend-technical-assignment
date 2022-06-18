@@ -61,6 +61,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// CRON JOBS SCHEDULE API CALLS AND DB INSERT
+
 cron.schedule('* */1 * * *', async () => {
     try {
         const response = await axios.get(
